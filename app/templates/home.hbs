@@ -1,0 +1,130 @@
+{{#paper-toolbar as |toolbar|}}
+   {{#toolbar.tools}}
+     <h2>TO DO</h2>
+     <span class="flex"></span>
+      {{#paper-button raised=true}}
+       Settings
+     {{/paper-button}}
+   {{/toolbar.tools}}
+ {{/paper-toolbar}}
+
+
+<div class="layout-row layout-align-space-around-center">
+
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}Todo{{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+      {{#card.content class="layout-row layout-align-space-between"}}
+        {{#card.media size="xl"}}
+          {{#paper-list}}
+              {{#each todoTasks as |task|}}
+
+                {{#paper-item class="md-3-line"}}
+                  <div class="md-list-item-text">
+                    <h3>{{task.id}}-{{task.description }}</h3>
+                    <p>Type: {{task.tasktype.name }}</p>
+                    <h4>Assigned to: {{task.user.name }}</h4>
+
+                  </div>
+                  {{paper-divider}}
+                {{/paper-item}}
+            {{/each}}
+          {{/paper-list}}
+
+        {{/card.media}}
+      {{/card.content}}
+
+  {{/paper-card}}
+
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}In Progress{{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+    {{#card.content class="layout-row layout-align-space-between"}}
+      {{#card.media size="xl"}}
+        <div class="card-media">
+          {{#each progressTasks as |task|}}
+            {{task.description }}
+          {{/each}}
+        </div>
+      {{/card.media}}
+      {{#card.actions class="layout-column"}}
+
+      {{/card.actions}}
+    {{/card.content}}
+  {{/paper-card}}
+
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}Done{{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+    {{#card.content class="layout-row layout-align-space-between"}}
+      {{#card.media size="xl"}}
+        <div class="card-media">
+          {{#each doneTasks as |task|}}
+            {{task.description}} - {{task.tasktype.name}} -> {{task.user.name}}
+          {{/each}}
+        </div>
+      {{/card.media}}
+      {{#card.actions class="layout-column"}}
+
+      {{/card.actions}}
+    {{/card.content}}
+  {{/paper-card}}
+
+  <button {{action "toggleModal"}}>ADD Task</button>
+
+{{#if isShowingModal}}
+    <div class="layout-row layout-align-center">
+      {{#modal-dialog onClose="toggleModal"
+                      targetAttachment="center"
+                      translucentOverlay=true}}
+
+          {{#paper-form as |form|}}
+            <div class="layout-column">
+
+              {{form.input label="Description" value=taskDescription onChange=(action (mut taskDescription)) required=true}}
+
+              {{#form.select
+                placeholder="Assign to a user"
+                selected=selectedUser
+                options=users
+                onChange=(action (mut selectedUser))
+                as |user|}}
+                {{user.name}}
+              {{/form.select}}
+
+              {{#form.select
+                placeholder="Type of Tasks"
+                selected=selectedTaskType
+                options=tasktypes
+                onChange=(action (mut selectedTaskType))
+                as |tasktype|}}
+                {{tasktype.name}}
+              {{/form.select}}
+
+            </div>
+
+            {{#paper-button onClick=(action "addTask" taskDescription selectedUser.id selectedTaskType.id)}}Create Task{{/paper-button}}
+
+          {{/paper-form}}
+      {{/modal-dialog}}
+    </div>
+{{/if}}
+
+
+
+
+{{#each tasks as |task|}}
+{{/each}}
+
+{{#each users as |user|}}
+{{/each}}
+</div>
