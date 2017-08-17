@@ -2,15 +2,25 @@
    {{#toolbar.tools}}
      <h2>TO DO</h2>
      <span class="flex"></span>
-      {{#paper-button raised=true}}
-       Settings
-     {{/paper-button}}
+     {{#link-to 'home.settings'}} {{#paper-button raised=true}}
+     Settings
+   {{/paper-button}} {{/link-to}}
    {{/toolbar.tools}}
  {{/paper-toolbar}}
+
+<style>
+
+  .scroll-div{
+    height: 500px;
+    overflow-y: scroll;
+  }
+
+</style>
 
 
 <div class="layout-row layout-align-space-around-center">
 
+<div class="scroll-div">
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
       {{#title.text as |text|}}
@@ -18,26 +28,38 @@
       {{/title.text}}
     {{/card.title}}
       {{#card.content class="layout-row layout-align-space-between"}}
-        {{#card.media size="xl"}}
-          {{#paper-list}}
-              {{#each todoTasks as |task|}}
+        {{#card.media size="sm"}}
+        {{/card.media}}
+      {{/card.content}}
+  {{/paper-card}}
+
+
+{{#paper-list}}
+{{#each todoTasks as |task|}}
+{{#paper-card as |card|}}
 
                 {{#paper-item class="md-3-line"}}
                   <div class="md-list-item-text">
                     <h3>{{task.id}}-{{task.description }}</h3>
                     <p>Type: {{task.tasktype.name }}</p>
                     <h4>Assigned to: {{task.user.name }}</h4>
-
+                    <!-- {{#paper-button onClick=(action "deleteTask" taskid)}}Delete Task{{/paper-button}} -->
                   </div>
                   {{paper-divider}}
+                  {{#paper-button onClick=(action "deleteTask" taskid)}}Update{{/paper-button}}
+                  {{#paper-button onClick=(action "deleteTask" taskid)}}Delete Task{{/paper-button}}
                 {{/paper-item}}
+            {{/paper-card}}
             {{/each}}
+
           {{/paper-list}}
 
-        {{/card.media}}
-      {{/card.content}}
 
-  {{/paper-card}}
+
+
+</div>
+
+
 
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
@@ -122,9 +144,11 @@
 
 
 
-{{#each tasks as |task|}}
+<!-- {{#each tasks as |task|}}
 {{/each}}
 
 {{#each users as |user|}}
-{{/each}}
+{{/each}} -->
 </div>
+
+{{outlet}}
