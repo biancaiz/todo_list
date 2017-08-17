@@ -20,6 +20,7 @@
 
 <div class="layout-row layout-align-space-around-center">
 
+<!-- Todo div -->
 <div class="scroll-div">
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
@@ -35,8 +36,9 @@
 
 
 {{#paper-list}}
-{{#each todoTasks as |task|}}
-{{#paper-card as |card|}}
+    {{#each todoTasks as |task|}}
+    {{#draggable-object content=task}}
+      {{#paper-card as |card|}}
 
                 {{#paper-item class="md-3-line"}}
                   <div class="md-list-item-text">
@@ -49,17 +51,19 @@
                   {{#paper-button onClick=(action "deleteTask" taskid)}}Update{{/paper-button}}
                   {{#paper-button onClick=(action "deleteTask" taskid)}}Delete Task{{/paper-button}}
                 {{/paper-item}}
+
             {{/paper-card}}
-            {{/each}}
-
-          {{/paper-list}}
-
-
-
+            {{/draggable-object}}
+      {{/each}}
+{{/paper-list}}
 
 </div>
+<!-- END todo div -->
 
 
+<!-- In progress div -->
+<div class="scroll-div">
+  {{#draggable-object-target action="updateStatus" status="progress"}}
 
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
@@ -68,18 +72,34 @@
       {{/title.text}}
     {{/card.title}}
     {{#card.content class="layout-row layout-align-space-between"}}
-      {{#card.media size="xl"}}
-        <div class="card-media">
-          {{#each progressTasks as |task|}}
-            {{task.description }}
-          {{/each}}
-        </div>
-      {{/card.media}}
-      {{#card.actions class="layout-column"}}
-
-      {{/card.actions}}
     {{/card.content}}
   {{/paper-card}}
+
+
+  {{#paper-card as |card|}}
+    {{#paper-list}}
+      {{#each progressTasks as |task|}}
+            {{#paper-item class="md-3-line"}}
+              <div class="md-list-item-text">
+                <h3>{{task.id}}-{{task.description }}</h3>
+                <p>Type: {{task.tasktype.name }}</p>
+                <h4>Assigned to: {{task.user.name }}</h4>
+                <!-- {{#paper-button onClick=(action "deleteTask" taskid)}}Delete Task{{/paper-button}} -->
+              </div>
+              {{paper-divider}}
+              {{#paper-button onClick=(action "deleteTask" taskid)}}Update{{/paper-button}}
+              {{#paper-button onClick=(action "deleteTask" taskid)}}Delete Task{{/paper-button}}
+            {{/paper-item}}
+      {{/each}}
+    {{/paper-list}}
+  {{/paper-card}}
+
+
+
+  {{/draggable-object-target}}
+  </div>
+  <!-- END in progress div -->
+
 
   {{#paper-card as |card|}}
     {{#card.title as |title|}}

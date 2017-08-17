@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
     deleteTask(taskid) {
         let store = this.get('store');
         store.findRecord('task', taskid, { backgroundReload: false }).then(function(task) {
-          task.destroyRecord();
+        task.destroyRecord();
       });
     },
     addTask(taskDescription, userId, tasktypeId){
@@ -45,6 +45,13 @@ export default Ember.Controller.extend({
     },
     toggleModal: function() {
         this.toggleProperty('isShowingModal');
+    },
+
+    updateStatus: function(task, ops) {
+
+      var status = ops.target.status;
+      task.set("status", status);
+      task.save();
     }
   }
 });
