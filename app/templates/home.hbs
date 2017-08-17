@@ -15,9 +15,10 @@
 
 
 
-<div class="layout-row layout-align-space-around-center">
+<div class="layout-row layout-align-space-around-center spacing">
 
 <!-- Todo div -->
+<div class="borderbox">
 <div class="scroll-div">
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
@@ -55,12 +56,14 @@
             {{/draggable-object}}
       {{/each}}
 {{/paper-list}}
-
+</div>
 </div>
 <!-- END todo div -->
 
 
 <!-- In progress div -->
+
+<div class="borderbox">
 <div class="scroll-div">
   {{#draggable-object-target action="updateStatus" status="progress"}}
 
@@ -97,9 +100,11 @@
 
   {{/draggable-object-target}}
   </div>
+</div>
   <!-- END in progress div -->
 
 <!-- DONE div -->
+<div class="borderbox">
 <div class="scroll-div">
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
@@ -128,6 +133,7 @@
       {{/paper-card}}
   {{/each}}
 {{/paper-list}}
+</div>
 </div>
 <!-- END DONE div -->
 
