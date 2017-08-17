@@ -1,5 +1,9 @@
+<link src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
+
+
 {{#paper-toolbar as |toolbar|}}
-   {{#toolbar.tools}}
+   {{#toolbar.tools class="navbar"}}
      <h2>TO DO</h2>
      <span class="flex"></span>
      {{#link-to 'home.settings'}} {{#paper-button raised=true}}
@@ -8,14 +12,7 @@
    {{/toolbar.tools}}
  {{/paper-toolbar}}
 
-<style>
 
-  .scroll-div{
-    height: 500px;
-    overflow-y: scroll;
-  }
-
-</style>
 
 
 <div class="layout-row layout-align-space-around-center">
@@ -25,7 +22,9 @@
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
       {{#title.text as |text|}}
-        {{#text.headline}}Todo{{/text.headline}}
+        {{#text.headline}}TO DO
+        {{#paper-button class="add-btn" onClick=(action "toggleModal")}}ADD Task{{/paper-button}}
+        {{/text.headline}}
       {{/title.text}}
     {{/card.title}}
       {{#card.content class="layout-row layout-align-space-between"}}
@@ -40,7 +39,7 @@
     {{#draggable-object content=task}}
       {{#paper-card as |card|}}
 
-                {{#paper-item class="md-3-line"}}
+                {{#paper-item class="md-3-line card"}}
                   <div class="md-list-item-text">
                     <h3>{{task.id}}-{{task.description }}</h3>
                     <p>Type: {{task.tasktype.name }}</p>
@@ -68,17 +67,53 @@
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
       {{#title.text as |text|}}
-        {{#text.headline}}In Progress{{/text.headline}}
+        {{#text.headline}}IN PROGRESS{{/text.headline}}
       {{/title.text}}
     {{/card.title}}
     {{#card.content class="layout-row layout-align-space-between"}}
     {{/card.content}}
   {{/paper-card}}
 
+{{#paper-list}}
 
-  {{#paper-card as |card|}}
-    {{#paper-list}}
       {{#each progressTasks as |task|}}
+        {{#paper-card as |card|}}
+            {{#paper-item class="md-3-line"}}
+              <div class="md-list-item-text">
+                <h3>{{task.id}}-{{task.description }}</h3>
+                <p>Type: {{task.tasktype.name }}</p>
+                <h4>Assigned to: {{task.user.name }}</h4>
+                <!-- {{#paper-button onClick=(action "deleteTask" taskid)}}Delete Task{{/paper-button}} -->
+              </div>
+                {{paper-divider}}
+              {{#paper-button onClick=(action "deleteTask" taskid)}}Update{{/paper-button}}
+              {{#paper-button onClick=(action "deleteTask" taskid)}}Delete Task{{/paper-button}}
+            {{/paper-item}}
+          {{/paper-card}}
+      {{/each}}
+
+  {{/paper-list}}
+
+
+  {{/draggable-object-target}}
+  </div>
+  <!-- END in progress div -->
+
+<!-- DONE div -->
+<div class="scroll-div">
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}DONE{{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+    {{#card.content class="layout-row layout-align-space-between"}}
+    {{/card.content}}
+  {{/paper-card}}
+
+{{#paper-list}}
+    {{#each doneTasks as |task|}}
+      {{#paper-card as |card|}}
             {{#paper-item class="md-3-line"}}
               <div class="md-list-item-text">
                 <h3>{{task.id}}-{{task.description }}</h3>
@@ -90,38 +125,13 @@
               {{#paper-button onClick=(action "deleteTask" taskid)}}Update{{/paper-button}}
               {{#paper-button onClick=(action "deleteTask" taskid)}}Delete Task{{/paper-button}}
             {{/paper-item}}
-      {{/each}}
-    {{/paper-list}}
-  {{/paper-card}}
+      {{/paper-card}}
+  {{/each}}
+{{/paper-list}}
+</div>
+<!-- END DONE div -->
 
 
-
-  {{/draggable-object-target}}
-  </div>
-  <!-- END in progress div -->
-
-
-  {{#paper-card as |card|}}
-    {{#card.title as |title|}}
-      {{#title.text as |text|}}
-        {{#text.headline}}Done{{/text.headline}}
-      {{/title.text}}
-    {{/card.title}}
-    {{#card.content class="layout-row layout-align-space-between"}}
-      {{#card.media size="xl"}}
-        <div class="card-media">
-          {{#each doneTasks as |task|}}
-            {{task.description}} - {{task.tasktype.name}} -> {{task.user.name}}
-          {{/each}}
-        </div>
-      {{/card.media}}
-      {{#card.actions class="layout-column"}}
-
-      {{/card.actions}}
-    {{/card.content}}
-  {{/paper-card}}
-
-  <button {{action "toggleModal"}}>ADD Task</button>
 
 {{#if isShowingModal}}
     <div class="layout-row layout-align-center">
