@@ -4,13 +4,21 @@
 
 {{#paper-toolbar as |toolbar|}}
    {{#toolbar.tools class="navbar"}}
+
      <h2>TO DO</h2>
      <span class="flex"></span>
+
      {{#link-to 'home.settings'}} {{#paper-button raised=true}}
      Settings
-   {{/paper-button}} {{/link-to}}
+     {{/paper-button}} {{/link-to}}
+
    {{/toolbar.tools}}
  {{/paper-toolbar}}
+
+
+
+
+
 
 
 
@@ -65,7 +73,7 @@
 
 <div class="borderbox">
 <div class="scroll-div">
-  {{#draggable-object-target action="updateStatus" status="progress"}}
+
 
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
@@ -77,9 +85,11 @@
     {{/card.content}}
   {{/paper-card}}
 
-{{#paper-list}}
+  {{#draggable-object-target action="updateStatus" status="progress"}}
+    {{#paper-list}}
 
       {{#each progressTasks as |task|}}
+  {{#draggable-object content=task}}
         {{#paper-card as |card|}}
             {{#paper-item class="md-3-line"}}
               <div class="md-list-item-text">
@@ -93,18 +103,21 @@
               {{#paper-button onClick=(action "deleteTask" taskid)}}Delete Task{{/paper-button}}
             {{/paper-item}}
           {{/paper-card}}
+      {{/draggable-object}}
+
       {{/each}}
-
-  {{/paper-list}}
-
-
+    {{/paper-list}}
   {{/draggable-object-target}}
+
+
+
   </div>
 </div>
   <!-- END in progress div -->
 
 <!-- DONE div -->
 <div class="borderbox">
+  {{#draggable-object-target action="updateStatus" status="done"}}
 <div class="scroll-div">
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
@@ -115,6 +128,7 @@
     {{#card.content class="layout-row layout-align-space-between"}}
     {{/card.content}}
   {{/paper-card}}
+
 
 {{#paper-list}}
     {{#each doneTasks as |task|}}
@@ -133,7 +147,9 @@
       {{/paper-card}}
   {{/each}}
 {{/paper-list}}
+
 </div>
+{{/draggable-object-target}}
 </div>
 <!-- END DONE div -->
 
@@ -171,7 +187,7 @@
             </div>
 
             {{#paper-button onClick=(action "addTask" taskDescription selectedUser.id selectedTaskType.id)}}Create Task{{/paper-button}}
-
+            {{#paper-button onClick=(action "toggleModal")}}Cancel{{/paper-button}}
           {{/paper-form}}
       {{/modal-dialog}}
     </div>

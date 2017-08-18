@@ -6,13 +6,13 @@ export default Ember.Controller.extend({
   }),
 
 
-  todoTasks: Ember.computed('tasks.length', function() {
+  todoTasks: Ember.computed('tasks.length', 'tasks.@each.status', function() {
     return this.get('tasks').filterBy('status','todo')
   }),
-  progressTasks: Ember.computed('tasks.length', function() {
+  progressTasks: Ember.computed('tasks.length', 'tasks.@each.status', function() {
     return this.get('tasks').filterBy('status','progress')
   }),
-  doneTasks: Ember.computed('tasks.length', function() {
+  doneTasks: Ember.computed('tasks.length', 'tasks.@each.status', function() {
     return this.get('tasks').filterBy('status','done')
   }),
 
@@ -26,6 +26,7 @@ export default Ember.Controller.extend({
   }),
 
   isShowingModal: false,
+
 
 
   actions: {
@@ -47,8 +48,9 @@ export default Ember.Controller.extend({
         this.toggleProperty('isShowingModal');
     },
 
-    updateStatus: function(task, ops) {
 
+    updateStatus: function(task, ops) {
+      
       var status = ops.target.status;
       task.set("status", status);
       task.save();
