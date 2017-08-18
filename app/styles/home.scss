@@ -1,6 +1,8 @@
   .scroll-div{
     height: 500px;
+    width: 400px;
     overflow-y: scroll;
+    // background-color: #CFD8DC;
   }
 
   .add-btn, .btn{
@@ -28,4 +30,9 @@
   border-width: 2px;
   border-radius: 5%;
   border-color: #ECECEC;
+}
+
+
+.sett {
+  background-color: #ECECEC;
 }

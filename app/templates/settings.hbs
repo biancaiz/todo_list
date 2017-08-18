@@ -1,0 +1,51 @@
+<!-- {{#each users as |user|}}
+ <p>{{user.name}}</p>
+{{/each}}
+
+<p>
+  {{paper-input label="User name" value=name onChange=(action (mut name)) icon="person"}}
+</p> -->
+
+{{#paper-toolbar as |toolbar|}}
+  {{#toolbar.tools class="navbar"}}
+    <h1>SETTINGS</h1>
+
+  {{/toolbar.tools}}
+{{/paper-toolbar}}
+
+<div class="layout-row layout-align-space-around-center spacing">
+
+     <div class="scroll-div">
+      {{#paper-list}}
+        {{#each users as |user|}}
+            {{#paper-item class="md-3-line"}}
+               <div class="md-list-item-text">
+                 <h3>{{user.id}}. {{user.name }}</h3>
+               </div>
+            {{paper-divider}}
+            {{/paper-item}}
+        {{/each}}
+      {{/paper-list}}
+      {{paper-input label="User name" value=name onChange=(action (mut name)) icon="person"}}
+     </div>
+
+
+
+
+
+
+     <div class="scroll-div">
+      {{#paper-list}}
+        {{#each tasktypes as |tasktype|}}
+            {{#paper-item class="md-3-line"}}
+               <div class="md-list-item-text">
+                 <h3>{{tasktype.id}}. {{tasktype.name }}</h3>
+               </div>
+            {{paper-divider}}
+            {{/paper-item}}
+        {{/each}}
+      {{/paper-list}}
+
+
+   </div>
+ </div>
