@@ -17,15 +17,9 @@
 
 <div class="borderbox">
 
-<!-- {{paper-chips
-  content=user
-  addItem=(action "addUser")
-  placeholder="Add user"}} -->
-
-<div class="layout row layout-align-center-center">
-      {{paper-input label="User name" value=userName onChange=(action (mut userName)) required=true icon="person"}}
-      {{#paper-button onClick=(action "addUser" userName)}}+{{/paper-button}}
-</div>
+  {{#paper-card class="layout row layout-align-center-center setthead" as |card|}}
+<h2>Users</h2>
+{{/paper-card}}
 
     <div class="scroll-div">
       {{#paper-list}}
@@ -41,9 +35,16 @@
         {{/each}}
       {{/paper-list}}
 
+
+
       <!-- {{paper-input label="User name" value=userName onChange=(action (mut userName)) required=true icon="person"}} -->
       <!-- {{#paper-button onClick=(action "addUser" userName)}}+{{/paper-button}} -->
 
+     </div>
+     <div class="layout row layout-align-center-center">
+
+           {{paper-input label="User name" value=userName onChange=(action (mut userName)) required=true icon="person"}}
+           {{#paper-button onClick=(action "addUser" userName)}}+{{/paper-button}}
      </div>
 </div>
 
@@ -52,12 +53,9 @@
 
 
 <div class="borderbox">
-
-<div class="layout row layout-align-center-center">
-       {{paper-input label="Task type" value=tasktype onChange=(action (mut tasktype)) required=true}}
-       {{#paper-button onClick=(action "addTaskType" tasktype)}}+{{/paper-button}}
-</div>
-
+  {{#paper-card class="layout row layout-align-center-center setthead" as |card|}}
+<h2>Task types</h2>
+{{/paper-card}}
        <div class="scroll-div">
       {{#paper-list}}
         {{#each tasktypes as |tasktype|}}
@@ -73,6 +71,10 @@
         {{/each}}
       {{/paper-list}}
 </div>
-
+<div class="layout row layout-align-center-center">
+       {{paper-input label="Task type" value=tasktype onChange=(action (mut tasktype)) required=true}}
+       {{#paper-button onClick=(action "addTaskType" tasktype)}}+{{/paper-button}}
+</div>
    </div>
+
  </div>
