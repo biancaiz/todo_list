@@ -21,11 +21,11 @@
 
 <!-- Todo div -->
   <div class="borderbox">
-    <div class="scroll-div">
-      {{#paper-card as |card|}}
+    <!-- <div class="scroll-div"> -->
+      {{#paper-card class="headers" as |card|}}
         {{#card.title as |title|}}
           {{#title.text as |text|}}
-            {{#text.headline}}TO DO
+            {{#text.headline}}TO DO  ({{todoTasks.length}})
               {{#paper-button class="add-btn" onClick=(action "toggleModal")}}ADD Task{{/paper-button}}
             {{/text.headline}}
           {{/title.text}}
@@ -36,10 +36,11 @@
         {{/card.content}}
       {{/paper-card}}
 
+    <div class="scroll-div">
       {{#paper-list}}
         {{#each todoTasks as |task|}}
           {{#draggable-object content=task}}
-            {{#paper-card as |card|}}
+            {{#paper-card class="todocards" as |card|}}
               {{#paper-item class="md-3-line card"}}
                 <div class="md-list-item-text">
                   <h3>{{task.id}}-{{task.description }}</h3>
@@ -47,8 +48,8 @@
                   <h4>Assigned to: {{task.user.name }}</h4>
                 </div>
                 {{paper-divider}}
-                {{#paper-button}}EDIT{{/paper-button}}
-                {{#paper-button}}DELETE{{/paper-button}}
+                <!-- {{#paper-button}}EDIT{{/paper-button}}
+                {{#paper-button}}DELETE{{/paper-button}} -->
               {{/paper-item}}
             {{/paper-card}}
           {{/draggable-object}}
@@ -61,22 +62,23 @@
 
 <!-- IN PROGRESS -->
   <div class="borderbox">
-    <div class="scroll-div">
-      {{#paper-card as |card|}}
+
+      {{#paper-card class="headers" as |card|}}
         {{#card.title as |title|}}
           {{#title.text as |text|}}
-            {{#text.headline}}IN PROGRESS{{/text.headline}}
+            {{#text.headline}}IN PROGRESS ({{progressTasks.length}}){{/text.headline}}
           {{/title.text}}
         {{/card.title}}
         {{#card.content class="layout-row layout-align-space-between"}}
         {{/card.content}}
       {{/paper-card}}
 
+<div class="scroll-div">
       {{#draggable-object-target action="updateStatus" status="progress"}}
         {{#paper-list}}
           {{#each progressTasks as |task|}}
             {{#draggable-object content=task}}
-              {{#paper-card as |card|}}
+              {{#paper-card class="inpcards" as |card|}}
                 {{#paper-item class="md-3-line"}}
                   <div class="md-list-item-text">
                     <h3>{{task.id}}-{{task.description }}</h3>
@@ -98,21 +100,21 @@
 <!-- DONE -->
  <div class="borderbox">
     {{#draggable-object-target action="updateStatus" status="done"}}
-      <div class="scroll-div">
-       {{#paper-card as |card|}}
+
+       {{#paper-card class="headers" as |card|}}
          {{#card.title as |title|}}
            {{#title.text as |text|}}
-             {{#text.headline}}DONE{{/text.headline}}
+             {{#text.headline}}DONE ({{doneTasks.length}}){{/text.headline}}
            {{/title.text}}
          {{/card.title}}
          {{#card.content class="layout-row layout-align-space-between"}}
          {{/card.content}}
        {{/paper-card}}
 
-
+  <div class="scroll-div">
        {{#paper-list}}
          {{#each doneTasks as |task|}}
-           {{#paper-card as |card|}}
+           {{#paper-card class="donecards" as |card|}}
              {{#paper-item class="md-3-line"}}
                 <div class="md-list-item-text">
                   <h3>{{task.id}}-{{task.description }}</h3>
@@ -159,6 +161,7 @@
                   as |tasktype|}}
                   {{tasktype.name}}
                 {{/form.select}}
+
 
               </div>
 

@@ -48,12 +48,26 @@ export default Ember.Controller.extend({
         this.toggleProperty('isShowingModal');
     },
 
+    addUser(userName){
+     const us = this.store.createRecord('user', {
+       name: userName
+     });
+     us.save();
+   },
+
+   addTaskType(taskTypeName){
+     const tt = this.store.createRecord('tasktype', {
+       name: taskTypeName
+     });
+     tt.save();
+   },
+
 
     updateStatus: function(task, ops) {
-      
+
       var status = ops.target.status;
       task.set("status", status);
       task.save();
-    }
+    },
   }
 });

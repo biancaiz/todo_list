@@ -15,37 +15,64 @@
 
 <div class="layout-row layout-align-space-around-center spacing">
 
-     <div class="scroll-div">
+<div class="borderbox">
+
+<!-- {{paper-chips
+  content=user
+  addItem=(action "addUser")
+  placeholder="Add user"}} -->
+
+<div class="layout row layout-align-center-center">
+      {{paper-input label="User name" value=userName onChange=(action (mut userName)) required=true icon="person"}}
+      {{#paper-button onClick=(action "addUser" userName)}}+{{/paper-button}}
+</div>
+
+    <div class="scroll-div">
       {{#paper-list}}
         {{#each users as |user|}}
-            {{#paper-item class="md-3-line"}}
-               <div class="md-list-item-text">
+        {{#paper-card class="users" as |card|}}
+            {{#paper-item}}
                  <h3>{{user.id}}. {{user.name }}</h3>
-               </div>
+                <span class="flex"></span>
+                 {{#paper-button onClick=(action "deleteUser" user.id) iconButton=true}}{{#paper-icon "delete"}}{{/paper-icon}}{{/paper-button}}
             {{paper-divider}}
             {{/paper-item}}
+            {{/paper-card}}
         {{/each}}
       {{/paper-list}}
-      {{paper-input label="User name" value=name onChange=(action (mut name)) icon="person"}}
+
+      <!-- {{paper-input label="User name" value=userName onChange=(action (mut userName)) required=true icon="person"}} -->
+      <!-- {{#paper-button onClick=(action "addUser" userName)}}+{{/paper-button}} -->
+
      </div>
+</div>
 
 
 
 
 
+<div class="borderbox">
 
-     <div class="scroll-div">
+<div class="layout row layout-align-center-center">
+       {{paper-input label="Task type" value=tasktype onChange=(action (mut tasktype)) required=true}}
+       {{#paper-button onClick=(action "addTaskType" tasktype)}}+{{/paper-button}}
+</div>
+
+       <div class="scroll-div">
       {{#paper-list}}
         {{#each tasktypes as |tasktype|}}
-            {{#paper-item class="md-3-line"}}
-               <div class="md-list-item-text">
+        {{#paper-card class="taskt" as |card|}}
+            {{#paper-item}}
+
                  <h3>{{tasktype.id}}. {{tasktype.name }}</h3>
-               </div>
+                 <span class="flex"></span>
+                  {{#paper-button onClick=(action "deleteTaskType" tasktype.id) iconButton=true}}{{#paper-icon "delete"}}{{/paper-icon}}{{/paper-button}}
             {{paper-divider}}
             {{/paper-item}}
+            {{/paper-card}}
         {{/each}}
       {{/paper-list}}
-
+</div>
 
    </div>
  </div>

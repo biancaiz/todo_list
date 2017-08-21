@@ -7,21 +7,29 @@
 
   .add-btn, .btn{
     float: right;
-    background-color: #6C7A89;
+    background-color: 	#b4adad;
     color: #fff;
   }
 
 
 .navbar{
-  background-color: #96281B;
+  background-color:	#5c3d51;
 }
 
 .spacing{
   padding: 250px 0px 150px 0px;
 }
 
-.card{
+.todocards{
   background-color: #ECECEC;
+}
+
+.inpcards{
+  background-color: #e1dddd;
+}
+
+.donecards{
+  background-color: #b4adad;
 }
 
 .borderbox {
@@ -30,8 +38,12 @@
   border-width: 2px;
   border-radius: 5%;
   border-color: #ECECEC;
+  background-color: #fff;
 }
 
+.headers {
+  background-color: 	#c1d6da;
+}
 
 .sett {
   background-color: #ECECEC;
