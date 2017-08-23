@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
     return this.get('store').findAll('task');
   }),
 
+  selectedTask: null,
 
   todoTasks: Ember.computed('tasks.length', 'tasks.@each.status', function() {
     return this.get('tasks').filterBy('status','todo')
@@ -26,10 +27,11 @@ export default Ember.Controller.extend({
   }),
 
   isShowingModal: false,
-
+  isShowingDialog: false,
 
 
   actions: {
+
     deleteTask(taskid) {
         let store = this.get('store');
         store.findRecord('task', taskid, { backgroundReload: false }).then(function(task) {
@@ -44,8 +46,18 @@ export default Ember.Controller.extend({
         tasktype: this.store.peekRecord('tasktype', tasktypeId)
       }).save();
     },
+
     toggleModal: function() {
         this.toggleProperty('isShowingModal');
+    },
+
+    toggleDialog: function() {
+        this.toggleProperty('isShowingDialog');
+    },
+
+    setSelectedTask(task) {
+      this.set('selectedTask', task)
+      this.toggleProperty('isShowingDialog');
     },
 
     addUser(userName){

@@ -28,7 +28,7 @@
             {{#paper-item}}
                  <h3>{{user.id}}. {{user.name }}</h3>
                 <span class="flex"></span>
-                 {{#paper-button onClick=(action "deleteUser" user.id) iconButton=true}}{{#paper-icon "delete"}}{{/paper-icon}}{{/paper-button}}
+                 {{#paper-button onClick=(action "deleteUser" user.id) iconButton=true}}{{#paper-icon "clear"}}{{/paper-icon}}{{/paper-button}}
             {{paper-divider}}
             {{/paper-item}}
             {{/paper-card}}
@@ -44,7 +44,7 @@
      <div class="layout row layout-align-center-center">
 
            {{paper-input label="User name" value=userName onChange=(action (mut userName)) required=true icon="person"}}
-           {{#paper-button onClick=(action "addUser" userName)}}+{{/paper-button}}
+           {{#paper-button onClick=(action "addUser" userName)}}{{#paper-icon "add_box" size=36}}{{/paper-icon}}{{/paper-button}}
      </div>
 </div>
 
@@ -64,7 +64,7 @@
 
                  <h3>{{tasktype.id}}. {{tasktype.name }}</h3>
                  <span class="flex"></span>
-                  {{#paper-button onClick=(action "deleteTaskType" tasktype.id) iconButton=true}}{{#paper-icon "delete"}}{{/paper-icon}}{{/paper-button}}
+                  {{#paper-button onClick=(action "deleteTaskType" tasktype.id) iconButton=true}}{{#paper-icon "clear"}}{{/paper-icon}}{{/paper-button}}
             {{paper-divider}}
             {{/paper-item}}
             {{/paper-card}}
@@ -73,7 +73,7 @@
 </div>
 <div class="layout row layout-align-center-center">
        {{paper-input label="Task type" value=tasktype onChange=(action (mut tasktype)) required=true}}
-       {{#paper-button onClick=(action "addTaskType" tasktype)}}+{{/paper-button}}
+       {{#paper-button onClick=(action "addTaskType" tasktype)}}{{#paper-icon "add_box" size=36}}{{/paper-icon}}{{/paper-button}}
 </div>
    </div>
 
