@@ -30,44 +30,42 @@
             {{/text.headline}}
           {{/title.text}}
         {{/card.title}}
-        <!-- {{#card.content class="layout-row layout-align-space-between"}}
-          {{#card.media size="sm"}}
-          {{/card.media}}
-        {{/card.content}} -->
       {{/paper-card}}
 
     <div class="scroll-div">
+      <!-- SHOW TASK -->
+             {{#if isShowingTodo}}
+               {{#paper-dialog onClose="toggleTodo"
+                                        targetAttachment="center"
+                                        translucentOverlay=true}}
+                  <div class="popup">
+                     <h3>Description: {{selectedTask.description}}</h3>
+                     <p>Type: {{selectedTask.tasktype.name}}</p>
+                     <h4>Assigned to: {{selectedTask.user.name}}</h4>
+
+                  </div>
+                  {{#paper-button onClick=(action "toggleTodo")}}{{#paper-icon "clear"}}{{/paper-icon}}{{/paper-button}}
+               {{/paper-dialog}}
+             {{/if}}
+      <!-- END SHOW TASK -->
       {{#paper-list}}
         {{#each todoTasks as |task|}}
           {{#draggable-object content=task}}
             {{#paper-card class="todocards" as |card|}}
-              {{#paper-item onClick=(action "setSelectedTask" task) class="md-3-line card"}}
-              <!-- SHOW TASK -->
-                     {{#if isShowingDialog}}
-                       {{#modal-dialog onClose="toggleDialog"
-                                                targetAttachment="center"
-                                                translucentOverlay=true}}
-                          <div class="popup">
-                             <h3>{{selectedTask.description}}</h3>
-                             <p>Type: {{selectedTask.tasktype.name}}</p>
-                             <h4>Assigned to: {{selectedTask.user.name}}</h4>
-                          </div>
-                       {{/modal-dialog}}
-                     {{/if}}
-              <!-- END SHOW TASK -->
+              {{#paper-item onClick=(action "setSelectedTask" task 'isShowingTodo') class="md-3-line card"}}
+
                 <div class="md-list-item-text">
                   <h3>{{task.id}}-{{task.description }}</h3>
                   <p>Type: {{task.tasktype.name }}</p>
                   <h4>Assigned to: {{task.user.name }}</h4>
                 </div>
-                {{#paper-button onClick=(action "setSelectedTask" task)}}{{#paper-icon "visibility"}}{{/paper-icon}}{{/paper-button}}
+                {{#paper-button onClick=(action "setSelectedTask" task 'isShowingTodo')}}{{#paper-icon "visibility"}}{{/paper-icon}}{{/paper-button}}
                 {{paper-divider}}
-                <!-- {{#paper-button}}EDIT{{/paper-button}}
-                {{#paper-button}}DELETE{{/paper-button}} -->
               {{/paper-item}}
             {{/paper-card}}
           {{/draggable-object}}
         {{/each}}
+
       {{/paper-list}}
     </div>
   </div>
@@ -88,31 +86,32 @@
       {{/paper-card}}
 
 <div class="scroll-div">
+  <!-- SHOW TASK -->
+         {{#if isShowingProgress}}
+           {{#modal-dialog onClose="toggleProgress"
+                                    targetAttachment="center"
+                                    translucentOverlay=true}}
+              <div class="popup">
+                 <h3>Description: {{selectedTask.description}}</h3>
+                 <p>Type: {{selectedTask.tasktype.name}}</p>
+                 <h4>Assigned to: {{selectedTask.user.name}}</h4>
+              </div>
+              {{#paper-button onClick=(action "toggleProgress")}}{{#paper-icon "clear"}}{{/paper-icon}}{{/paper-button}}
+           {{/modal-dialog}}
+         {{/if}}
+  <!-- END SHOW TASK -->
       {{#draggable-object-target action="updateStatus" status="progress"}}
         {{#paper-list}}
           {{#each progressTasks as |task|}}
             {{#draggable-object content=task}}
               {{#paper-card class="inpcards" as |card|}}
-                {{#paper-item onClick=(action "setSelectedTask" task) class="md-3-line"}}
-                <!-- SHOW TASK -->
-                       {{#if isShowingDialog}}
-                         {{#modal-dialog onClose="toggleDialog"
-                                                  targetAttachment="center"
-                                                  translucentOverlay=true}}
-                            <div class="popup">
-                               <h3>{{selectedTask.description}}</h3>
-                               <p>Type: {{selectedTask.tasktype.name}}</p>
-                               <h4>Assigned to: {{selectedTask.user.name}}</h4>
-                            </div>
-                         {{/modal-dialog}}
-                       {{/if}}
-                <!-- END SHOW TASK -->
+                {{#paper-item onClick=(action "setSelectedTask" task 'isShowingProgress') class="md-3-line"}}
                   <div class="md-list-item-text">
                     <h3>{{task.id}}-{{task.description }}</h3>
                     <p>Type: {{task.tasktype.name }}</p>
                     <h4>Assigned to: {{task.user.name }}</h4>
                   </div>
-                  {{#paper-button onClick=(action "setSelectedTask" task)}}{{#paper-icon "visibility"}}{{/paper-icon}}{{/paper-button}}
+                  {{#paper-button onClick=(action "setSelectedTask" task 'isShowingProgress')}}{{#paper-icon "visibility"}}{{/paper-icon}}{{/paper-button}}
                   {{paper-divider}}
                 {{/paper-item}}
               {{/paper-card}}
@@ -140,30 +139,31 @@
        {{/paper-card}}
 
   <div class="scroll-div">
+    <!-- SHOW TASK -->
+           {{#if isShowingDone}}
+             {{#modal-dialog onClose="toggleDone"
+                                      targetAttachment="center"
+                                      translucentOverlay=true}}
+                <div class="popup">
+                   <h3>Description: {{selectedTask.description}}</h3>
+                   <p>Type: {{selectedTask.tasktype.name}}</p>
+                   <h4>Assigned to: {{selectedTask.user.name}}</h4>
+                </div>
+                {{#paper-button onClick=(action "toggleDone")}}{{#paper-icon "clear"}}{{/paper-icon}}{{/paper-button}}
+             {{/modal-dialog}}
+           {{/if}}
+    <!-- END SHOW TASK -->
        {{#paper-list}}
          {{#each doneTasks as |task|}}
            {{#paper-card class="donecards" as |card|}}
-             {{#paper-item onClick=(action "setSelectedTask" task) class="md-3-line"}}
-         <!-- SHOW TASK -->
-                {{#if isShowingDialog}}
-                  {{#modal-dialog onClose="toggleDialog"
-                                           targetAttachment="center"
-                                           translucentOverlay=true}}
-                     <div class="popup">
-                        <h3>{{selectedTask.description}}</h3>
-                        <p>Type: {{selectedTask.tasktype.name}}</p>
-                        <h4>Assigned to: {{selectedTask.user.name}}</h4>
-                     </div>
-                  {{/modal-dialog}}
-                {{/if}}
-         <!-- END SHOW TASK -->
+             {{#paper-item onClick=(action "setSelectedTask" task 'isShowingDone') class="md-3-line"}}
                 <div class="md-list-item-text">
                   <h3>{{task.id}}-{{task.description }}</h3>
                   <p>Type: {{task.tasktype.name }}</p>
                   <h4>Assigned to: {{task.user.name }}</h4>
                   <span class="flex"></span>
                 </div>
-                {{#paper-button onClick=(action "setSelectedTask" task)}}{{#paper-icon "visibility"}}{{/paper-icon}}{{/paper-button}}
+                {{#paper-button onClick=(action "setSelectedTask" task 'isShowingDone')}}{{#paper-icon "visibility"}}{{/paper-icon}}{{/paper-button}}
                 {{#paper-button onClick=(action "deleteTask" task.id) iconButton=true}}{{#paper-icon "delete"}}{{/paper-icon}}{{/paper-button}}
                 {{paper-divider}}
              {{/paper-item}}

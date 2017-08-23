@@ -27,7 +27,9 @@ export default Ember.Controller.extend({
   }),
 
   isShowingModal: false,
-  isShowingDialog: false,
+  isShowingTodo: false,
+  isShowingProgress: false,
+  isShowingDone: false,
 
 
   actions: {
@@ -51,14 +53,26 @@ export default Ember.Controller.extend({
         this.toggleProperty('isShowingModal');
     },
 
-    toggleDialog: function() {
-        this.toggleProperty('isShowingDialog');
+
+
+    toggleTodo: function() {
+        this.toggleProperty('isShowingTodo');
+    },
+    toggleProgress: function() {
+        this.toggleProperty('isShowingProgress');
+    },
+    toggleDone: function() {
+        this.toggleProperty('isShowingDone');
     },
 
-    setSelectedTask(task) {
+
+
+    setSelectedTask(task, isShowingTask) {
       this.set('selectedTask', task)
-      this.toggleProperty('isShowingDialog');
+      this.toggleProperty(isShowingTask);
     },
+
+
 
     addUser(userName){
      const us = this.store.createRecord('user', {
