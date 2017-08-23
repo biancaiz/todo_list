@@ -36,15 +36,11 @@
       {{/paper-list}}
 
 
-
-      <!-- {{paper-input label="User name" value=userName onChange=(action (mut userName)) required=true icon="person"}} -->
-      <!-- {{#paper-button onClick=(action "addUser" userName)}}+{{/paper-button}} -->
-
      </div>
      <div class="layout row layout-align-center-center">
 
-           {{paper-input label="User name" value=userName onChange=(action (mut userName)) required=true icon="person"}}
-           {{#paper-button onClick=(action "addUser" userName)}}{{#paper-icon "add_box" size=36}}{{/paper-icon}}{{/paper-button}}
+           {{paper-input label="User name" value=newUser onChange=(action (mut newUser)) icon="person"}}
+           {{#paper-button onClick=(action "addUser" newUser)}}{{#paper-icon "add_box" size=36}}{{/paper-icon}}{{/paper-button}}
      </div>
 </div>
 
@@ -72,8 +68,8 @@
       {{/paper-list}}
 </div>
 <div class="layout row layout-align-center-center">
-       {{paper-input label="Task type" value=tasktype onChange=(action (mut tasktype)) required=true}}
-       {{#paper-button onClick=(action "addTaskType" tasktype)}}{{#paper-icon "add_box" size=36}}{{/paper-icon}}{{/paper-button}}
+       {{paper-input label="Task type" value=newTaskType onChange=(action (mut newTaskType))}}
+       {{#paper-button onClick=(action "addTaskType" newTaskType)}}{{#paper-icon "add_box" size=36}}{{/paper-icon}}{{/paper-button}}
 </div>
    </div>
 
