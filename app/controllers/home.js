@@ -26,6 +26,10 @@ export default Ember.Controller.extend({
     return this.get('store').findAll('tasktype');
   }),
 
+  newTask: Ember.computed(function() {
+    return this.store.createRecord('task');
+  }),
+
   isShowingModal: false,
   isShowingTodo: false,
   isShowingProgress: false,
@@ -34,20 +38,21 @@ export default Ember.Controller.extend({
 
   actions: {
 
+    addTask(task){
+      task.set('status', "todo");
+      task.save();
+      this.send('toggleModal');
+      this.set('newTask', this.store.createRecord('task'));
+    },
+
     deleteTask(taskid) {
         let store = this.get('store');
         store.findRecord('task', taskid, { backgroundReload: false }).then(function(task) {
         task.destroyRecord();
       });
     },
-    addTask(taskDescription, userId, tasktypeId){
-      const u = this.store.createRecord('task', {
-        description: taskDescription,
-        status: "todo",
-        user: this.store.peekRecord('user', userId),
-        tasktype: this.store.peekRecord('tasktype', tasktypeId)
-      }).save();
-    },
+
+
 
     toggleModal: function() {
         this.toggleProperty('isShowingModal');
@@ -74,26 +79,15 @@ export default Ember.Controller.extend({
 
 
 
-    addUser(userName){
-     const us = this.store.createRecord('user', {
-       name: userName
-     });
-     us.save();
-   },
-
-   addTaskType(taskTypeName){
-     const tt = this.store.createRecord('tasktype', {
-       name: taskTypeName
-     });
-     tt.save();
-   },
-
-
     updateStatus: function(task, ops) {
 
       var status = ops.target.status;
       task.set("status", status);
       task.save();
     },
+
+    togglePika() {
+      this.toggleProperty('showPika');
+    }
   }
 });

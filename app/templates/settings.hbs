@@ -8,8 +8,11 @@
 
 {{#paper-toolbar as |toolbar|}}
   {{#toolbar.tools class="navbar"}}
+    {{#link-to 'home'}}
+      {{#paper-icon "keyboard_arrow_left" size=36}}{{/paper-icon}}
+    {{/link-to}}
+    <span class="flex"></span>
     <h1>SETTINGS</h1>
-
   {{/toolbar.tools}}
 {{/paper-toolbar}}
 
