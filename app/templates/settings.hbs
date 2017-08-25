@@ -1,10 +1,4 @@
-<!-- {{#each users as |user|}}
- <p>{{user.name}}</p>
-{{/each}}
 
-<p>
-  {{paper-input label="User name" value=name onChange=(action (mut name)) icon="person"}}
-</p> -->
 
 {{#paper-toolbar as |toolbar|}}
   {{#toolbar.tools class="navbar"}}
@@ -16,33 +10,32 @@
   {{/toolbar.tools}}
 {{/paper-toolbar}}
 
+
 <div class="layout-row layout-align-space-around-center spacing">
 
 <div class="borderbox">
+      {{#paper-card class="layout row layout-align-center-center setthead" as |card|}}
+        <h2>Users</h2>
+      {{/paper-card}}
 
-  {{#paper-card class="layout row layout-align-center-center setthead" as |card|}}
-<h2>Users</h2>
-{{/paper-card}}
+      <div class="scroll-div">
+        {{#paper-list}}
+          {{#each users as |user|}}
+          {{#paper-card class="users" as |card|}}
+              {{#paper-item}}
+                   <h3>{{user.id}}. {{user.name }}</h3>
+                  <span class="flex"></span>
+                   {{#paper-button onClick=(action "deleteUser" user.id) iconButton=true}}{{#paper-icon "clear"}}{{/paper-icon}}{{/paper-button}}
+              {{paper-divider}}
+              {{/paper-item}}
+              {{/paper-card}}
+          {{/each}}
+        {{/paper-list}}
+       </div>
 
-    <div class="scroll-div">
-      {{#paper-list}}
-        {{#each users as |user|}}
-        {{#paper-card class="users" as |card|}}
-            {{#paper-item}}
-                 <h3>{{user.id}}. {{user.name }}</h3>
-                <span class="flex"></span>
-                 {{#paper-button onClick=(action "deleteUser" user.id) iconButton=true}}{{#paper-icon "clear"}}{{/paper-icon}}{{/paper-button}}
-            {{paper-divider}}
-            {{/paper-item}}
-            {{/paper-card}}
-        {{/each}}
-      {{/paper-list}}
-
-
-     </div>
      <div class="layout row layout-align-center-center">
-
-           {{paper-input label="User name" value=newUser onChange=(action (mut newUser)) icon="person"}}
+           <!-- {{#paper-icon "account_box" size=36}}{{/paper-icon}} -->
+           {{paper-input label="User name" value=newUser onChange=(action (mut newUser))}}
            {{#paper-button onClick=(action "addUser" newUser)}}{{#paper-icon "add_box" size=36}}{{/paper-icon}}{{/paper-button}}
      </div>
 </div>

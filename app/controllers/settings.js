@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+
   users: Ember.computed(function() {
     return this.get('store').findAll('user');
   }),
-
 
   tasktypes: Ember.computed(function() {
     return this.get('store').findAll('tasktype');
@@ -15,6 +15,40 @@ export default Ember.Controller.extend({
 
 
   actions: {
+    
+    addUser(newUser) {
+       const us = this.store.createRecord('user', {
+         name: newUser
+       });
+
+       us.validate()
+       .then(({ validations}) => {
+         if (validations.get('isValid')) {
+           us.save()
+           .then(() => this.set('showSaved', true));
+           this.set('newUser', '');
+         }
+         this.set('didValidate', true)
+       });
+      },
+
+     addTaskType(newTaskType) {
+       const tt = this.store.createRecord('tasktype', {
+         name: newTaskType
+       });
+
+       tt.validate()
+       .then(({ validations}) => {
+         if (validations.get('isValid')) {
+           us.save()
+           .then(() => this.set('showSaved', true));
+           this.set('newTaskType', '');
+         }
+         this.set('didValidate', true)
+       });
+    },
+
+
     deleteUser(userId) {
       let store = this.get('store');
       store.findRecord('user', userId, { backgroundReload: false }).then(function(user) {
@@ -31,22 +65,6 @@ export default Ember.Controller.extend({
       tasktype.get('isDeleted');
       tasktype.save();
       });
-    },
-
-    addUser(newUser) {
-     const us = this.store.createRecord('user', {
-       name: newUser
-     });
-     us.save();
-     this.set('newUser', '');
-   },
-
-   addTaskType(newTaskType) {
-     const tt = this.store.createRecord('tasktype', {
-       name: newTaskType
-     });
-     tt.save();
-     this.set('newTaskType', '');
-   }
- }
+    }
+  }
 });

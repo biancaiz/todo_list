@@ -40,9 +40,16 @@ export default Ember.Controller.extend({
 
     addTask(task){
       task.set('status', "todo");
-      task.save();
-      this.send('toggleModal');
-      this.set('newTask', this.store.createRecord('task'));
+      task.validate()
+      .then(({ validations }) => {
+         if (validations.get('isValid')) {
+           task.save()
+            .then(() => this.set('showSaved', true));
+           this.send('toggleModal');
+           this.set('newTask', this.store.createRecord('task'));
+       }
+        this.set('didValidate', true)
+     });
     },
 
     deleteTask(taskid) {
@@ -71,16 +78,13 @@ export default Ember.Controller.extend({
     },
 
 
-
     setSelectedTask(task, isShowingTask) {
       this.set('selectedTask', task)
       this.toggleProperty(isShowingTask);
     },
 
 
-
     updateStatus: function(task, ops) {
-
       var status = ops.target.status;
       task.set("status", status);
       task.save();

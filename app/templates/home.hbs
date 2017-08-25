@@ -1,26 +1,22 @@
 <!-- HOME PAGE -->
 
-
+<!-- NAVBAR -->
 {{#paper-toolbar as |toolbar|}}
   {{#toolbar.tools class="navbar"}}
     <h1>TO DO</h1>
     <span class="flex"></span>
-
     {{#link-to 'settings'}}
-
         SETTINGS{{#paper-icon "keyboard_arrow_right" size=36}}{{/paper-icon}}
-
     {{/link-to}}
   {{/toolbar.tools}}
 {{/paper-toolbar}}
-
+<!-- END NAVBAR -->
 
 
 <div class="layout-row layout-align-space-around-center spacing">
 
 <!-- Todo div -->
   <div class="borderbox">
-    <!-- <div class="scroll-div"> -->
       {{#paper-card class="headers" as |card|}}
         {{#card.title as |title|}}
           {{#title.text as |text|}}
@@ -32,40 +28,36 @@
       {{/paper-card}}
 
     <div class="scroll-div">
-      <!-- SHOW TASK -->
-             {{#if isShowingTodo}}
 
-             {{#paper-dialog class="flex-30" onClose=(action "toggleTodo") clickOutsideToClose=true}}
-                <form>
-                  {{#paper-toolbar}}
-                    {{#paper-toolbar-tools class="navbar"}}
-                      <h2>Task Details</h2>
-                      <span class="flex"></span>
-                      {{#paper-button iconButton=true onClick=(action "toggleTodo" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-                    {{/paper-toolbar-tools}}
-                  {{/paper-toolbar}}
+<!-- SHOW TASK -->
+     {{#if isShowingTodo}}
+       {{#paper-dialog class="flex-30" onClose=(action "toggleTodo") clickOutsideToClose=true}}
+            {{#paper-toolbar}}
+              {{#paper-toolbar-tools class="navbar"}}
+                <h2>Task Details</h2>
+                <span class="flex"></span>
+                {{#paper-button iconButton=true onClick=(action "toggleTodo" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+              {{/paper-toolbar-tools}}
+            {{/paper-toolbar}}
+            {{#paper-dialog-content}}
+                <h3>Task description: {{selectedTask.description}}</h3>
+                <p>Assigned to: {{selectedTask.user.name}}</p>
+                <p>TaskType: {{selectedTask.tasktype.name}}</p>
+            {{/paper-dialog-content}}
+        {{/paper-dialog}}
+      {{/if}}
+<!-- END SHOW TASK -->
 
-                  {{#paper-dialog-content}}
-                      <h3>Task description: {{selectedTask.description}}</h3>
-                      <p>Assigned to: {{selectedTask.user.name}}</p>
-                      <p>TaskType: {{selectedTask.tasktype.name}}</p>
-                  {{/paper-dialog-content}}
-
-                </form>
-              {{/paper-dialog}}
-
-             {{/if}}
-      <!-- END SHOW TASK -->
       {{#paper-list}}
         {{#each todoTasks as |task|}}
           {{#draggable-object content=task}}
             {{#paper-card class="todocards" as |card|}}
               {{#paper-item onClick=(action "setSelectedTask" task 'isShowingTodo') class="md-3-line card"}}
-
                 <div class="md-list-item-text">
                   <h3>{{task.id}}. {{task.description }}</h3>
                   <p>Type: {{task.tasktype.name }}</p>
                   <h4>Assigned to: {{task.user.name }}</h4>
+                  <h3>{{task.createdAt}}</h3>
                 </div>
                 {{#paper-button onClick=(action "setSelectedTask" task 'isShowingTodo')}}{{#paper-icon "visibility"}}{{/paper-icon}}{{/paper-button}}
                 {{paper-divider}}
@@ -73,7 +65,6 @@
             {{/paper-card}}
           {{/draggable-object}}
         {{/each}}
-
       {{/paper-list}}
     </div>
   </div>
@@ -95,28 +86,26 @@
       {{/paper-card}}
 
 <div class="scroll-div">
+
   <!-- SHOW TASK -->
-         {{#if isShowingProgress}}
+       {{#if isShowingProgress}}
          {{#paper-dialog class="flex-30" onClose=(action "toggleProgress") clickOutsideToClose=true}}
-            <form>
-              {{#paper-toolbar}}
-                {{#paper-toolbar-tools class="navbar"}}
-                  <h2>Task Details</h2>
-                  <span class="flex"></span>
-                  {{#paper-button iconButton=true onClick=(action "toggleProgress" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-                {{/paper-toolbar-tools}}
-              {{/paper-toolbar}}
-
-              {{#paper-dialog-content}}
-                  <h3>Task description: {{selectedTask.description}}</h3>
-                  <p>Assigned to: {{selectedTask.user.name}}</p>
-                  <p>TaskType: {{selectedTask.tasktype.name}}</p>
-              {{/paper-dialog-content}}
-
-            </form>
-          {{/paper-dialog}}
-         {{/if}}
+            {{#paper-toolbar}}
+              {{#paper-toolbar-tools class="navbar"}}
+                <h2>Task Details</h2>
+                <span class="flex"></span>
+                {{#paper-button iconButton=true onClick=(action "toggleProgress" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+              {{/paper-toolbar-tools}}
+            {{/paper-toolbar}}
+            {{#paper-dialog-content}}
+                <h3>Task description: {{selectedTask.description}}</h3>
+                <p>Assigned to: {{selectedTask.user.name}}</p>
+                <p>TaskType: {{selectedTask.tasktype.name}}</p>
+            {{/paper-dialog-content}}
+         {{/paper-dialog}}
+       {{/if}}
   <!-- END SHOW TASK -->
+
       {{#draggable-object-target action="updateStatus" status="progress"}}
         {{#paper-list}}
           {{#each progressTasks as |task|}}
@@ -157,67 +146,71 @@
        {{/paper-card}}
 
   <div class="scroll-div">
+
     <!-- SHOW TASK -->
-           {{#if isShowingDone}}
+         {{#if isShowingDone}}
            {{#paper-dialog class="flex-30" onClose=(action "toggleDone") clickOutsideToClose=true}}
-              <form>
-                {{#paper-toolbar}}
-                  {{#paper-toolbar-tools class="navbar"}}
-                    <h2>Task Details</h2>
-                    <span class="flex"></span>
-                    {{#paper-button iconButton=true onClick=(action "toggleDone" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-                  {{/paper-toolbar-tools}}
-                {{/paper-toolbar}}
-
-                {{#paper-dialog-content}}
-                    <h3>Task description: {{selectedTask.description}}</h3>
-                    <p>Assigned to: {{selectedTask.user.name}}</p>
-                    <p>TaskType: {{selectedTask.tasktype.name}}</p>
-                {{/paper-dialog-content}}
-
-              </form>
-            {{/paper-dialog}}
-           {{/if}}
-    <!-- END SHOW TASK -->
-       {{#paper-list}}
-         {{#each doneTasks as |task|}}
-           {{#paper-card class="donecards" as |card|}}
-             {{#paper-item onClick=(action "setSelectedTask" task 'isShowingDone') class="md-3-line"}}
-                <div class="md-list-item-text">
-                  <h3>{{task.id}}. {{task.description }}</h3>
-                  <p>Type: {{task.tasktype.name }}</p>
-                  <h4>Assigned to: {{task.user.name }}</h4>
+              {{#paper-toolbar}}
+                {{#paper-toolbar-tools class="navbar"}}
+                  <h2>Task Details</h2>
                   <span class="flex"></span>
-                </div>
-                {{#paper-button onClick=(action "setSelectedTask" task 'isShowingDone')}}{{#paper-icon "visibility"}}{{/paper-icon}}{{/paper-button}}
-                {{#paper-button onClick=(action "deleteTask" task.id) iconButton=true}}{{#paper-icon "delete"}}{{/paper-icon}}{{/paper-button}}
-                {{paper-divider}}
-             {{/paper-item}}
-           {{/paper-card}}
-         {{/each}}
-       {{/paper-list}}
-      </div>
-    {{/draggable-object-target}}
-  </div>
+                  {{#paper-button iconButton=true onClick=(action "toggleDone" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+                {{/paper-toolbar-tools}}
+              {{/paper-toolbar}}
+              {{#paper-dialog-content}}
+                  <h3>Task description: {{selectedTask.description}}</h3>
+                  <p>Assigned to: {{selectedTask.user.name}}</p>
+                  <p>TaskType: {{selectedTask.tasktype.name}}</p>
+              {{/paper-dialog-content}}
+            {{/paper-dialog}}
+          {{/if}}
+    <!-- END SHOW TASK -->
+
+         {{#paper-list}}
+           {{#each doneTasks as |task|}}
+             {{#paper-card class="donecards" as |card|}}
+               {{#paper-item onClick=(action "setSelectedTask" task 'isShowingDone') class="md-3-line"}}
+                  <div class="md-list-item-text">
+                    <h3>{{task.id}}. {{task.description }}</h3>
+                    <p>Type: {{task.tasktype.name }}</p>
+                    <h4>Assigned to: {{task.user.name }}</h4>
+                    <span class="flex"></span>
+                  </div>
+                  {{#paper-button onClick=(action "setSelectedTask" task 'isShowingDone')}}{{#paper-icon "visibility"}}{{/paper-icon}}{{/paper-button}}
+                  {{#paper-button onClick=(action "deleteTask" task.id) iconButton=true}}{{#paper-icon "delete"}}{{/paper-icon}}{{/paper-button}}
+                  {{paper-divider}}
+               {{/paper-item}}
+             {{/paper-card}}
+           {{/each}}
+         {{/paper-list}}
+        </div>
+      {{/draggable-object-target}}
+    </div>
 <!-- END DONE -->
 
 
-
+<!-- ADD TASK DIALOG -->
   {{#if isShowingModal}}
       {{#paper-dialog class="flex-20" onClose=(action "toggleModal") clickOutsideToClose=true}}
 
-                        {{#paper-toolbar}}
-                          {{#paper-toolbar-tools class="navbar"}}
-                            <h2>Add a new task</h2>
-                            <span class="flex"></span>
-                            {{#paper-button iconButton=true onClick=(action "toggleModal" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-                          {{/paper-toolbar-tools}}
-                        {{/paper-toolbar}}
+              {{#paper-toolbar}}
+                {{#paper-toolbar-tools class="navbar"}}
+                  <h2>Add a new task</h2>
+                  <span class="flex"></span>
+                  {{#paper-button iconButton=true onClick=(action "toggleModal" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+                {{/paper-toolbar-tools}}
+              {{/paper-toolbar}}
 
               {{#paper-dialog-content}}
               <div class="layout-column">
 
-                {{#paper-input label="Description" value=newTask.description onChange=(action (mut newTask.description)) required=true}}{{/paper-input}}
+                {{validated-input  label="Description"
+                                   value=newTask.description
+                                   onChange=(action (mut newTask.description))
+                                   model=newTask
+                                   didValidate=didValidate
+                                   valuePath='description'}}
+
                 {{#paper-select
                   placeholder="Assign to a user"
                   selected=newTask.user
@@ -245,13 +238,13 @@
               {{/paper-dialog-content}}
 
               {{#paper-dialog-actions}}
-              {{#paper-button onClick=(action "addTask" newTask)}}Create Task{{/paper-button}}
-              <span class="flex"></span>
-              {{#paper-button onClick=(action "toggleModal")}}Cancel{{/paper-button}}
-            {{/paper-dialog-actions}}
+                {{#paper-button onClick=(action "addTask" newTask)}}Create Task{{/paper-button}}
+                <span class="flex"></span>
+                {{#paper-button onClick=(action "toggleModal")}}Cancel{{/paper-button}}
+              {{/paper-dialog-actions}}
 
         {{/paper-dialog}}
   {{/if}}
-
+<!-- END ADD TASK -->
 
 </div>
